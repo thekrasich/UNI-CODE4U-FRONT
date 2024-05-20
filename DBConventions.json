@@ -1,0 +1,100 @@
+{
+  "annotations": {
+    "DB PROPERTY ONLY": "Property is not available on front-end. In another way DTO doens't have such property",
+    "relationship": "Field for showing relationships between the tables."
+  },
+  "user": {
+    "user_id": "bigint DB PROPERTY ONLY",
+    "name": "varchar(50)",
+    "surname": "varchar(60)",
+    "email": "varchar(254)",
+    "password": "varchar(64)",
+    "phone_number": "char(9)",
+    "role": "char",
+
+    "relationship": {
+      "basket": "One user.user_id to Many basket.user_id",
+      "order": "One user.user_id to Many basket.user_id"
+    }
+  },
+  "basket": {
+    "basket_id": "bigint",
+    "user_id": "bigint",
+
+    "relationship": {
+      "basket_product": "One basket.basket_id to Many basket_product.basket_id",
+      "user": "One user.user_id to one basket.user_id"
+    }
+  },
+  "order": {
+    "order_id": "bigint DB PROPERTY ONLY",
+    "user_id": "bigint DB PROPERTY ONLY",
+    "creation_datetime": "timestamp DB PROPERTY ONLY",
+    "status": "char",
+
+    "relationship": {
+      "order_product": "One order.order_id to Many order_product.order_id",
+      "user": "Many order.user_id to one user.user_id"
+    }
+  },
+  "basket_product": {
+    "basket_id": "bigint DB PROPERTY ONLY",
+    "product_id": "int DB PROPERTY ONLY",
+    "quantity": "int",
+
+    "relationship": {
+      "product": "Many basket_product.product_id to one product.product_id",
+      "basket": "Many basket_product.basket_id to one basket.basket_id"
+    }
+  },
+  "order_product": {
+    "order_id": "bigint DB PROPERTY ONLY",
+    "product_id": "int DB PROPERTY ONLY",
+    "quantity": "int",
+
+    "relationship": {
+      "product": "Many order_product.product_id to one product.product_id",
+      "order": "Many order_product.order_id to one order.order_id"
+    }
+  },
+  "product": {
+    "product_id": "integer DB PROPERTY ONLY",
+    "product_name": "varchar(50)",
+    "price": "numeric",
+    "description": "text",
+    "subcategory_id": "smallint",
+    "available_count": "int",
+
+    "relationship": {
+      "product_subcategory": "Many product.subcategory_id to one product_subcategory.subcategory_id",
+      "photo": "One product.product_id to Many photo.product_id"
+    }
+  },
+  "photo": {
+    "photo_id": "bigint DB PROPERTY ONLY",
+    "product_id": "int DB PROPERTY ONLY",
+    "path": "varchar(256)",
+
+    "relationship": {
+      "product": "Many photo.product_id to one product.product_id"
+    }
+  },
+  "product_subcategory": {
+    "subcategory_id": "smallint DB PROPERTY ONLY",
+    "subcategory_name": "varchar(40)",
+    "category_id": "smallint",
+
+    "relationship": {
+      "product_category": "Many product_subcategory.category_id to one product_category.category_id",
+      "product": "One product_subcategory.subcategory_id to Many product.subcategory_id"
+    }
+  },
+  "product_category": {
+    "category_id": "smallint DB PROPERTY ONLY",
+    "category_name": "varchar(40)",
+
+    "relationship": {
+      "product_subcategory": "One product_category.category_id to many product_subcategory.category_id"
+    }
+  }
+}
